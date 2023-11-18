@@ -74,7 +74,13 @@ export const sendHelloAlert = async () => {
 export const sendHelloNoti = async () => {
   await window.ethereum.request({
     method: 'wallet_invokeSnap',
-    params: { snapId: defaultSnapOrigin, request: { method: 'hello_world_noti' } },
+    params: {
+      snapId: defaultSnapOrigin,
+      request: {
+        method: 'hello_world_noti',
+        params: { messageBody: 'test params', alertBody: 'Alert' },
+      },
+    },
   });
 };
 

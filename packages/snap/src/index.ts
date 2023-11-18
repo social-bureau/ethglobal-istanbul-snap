@@ -70,22 +70,27 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
         return true;
       }
       case "hello_world_noti": {
-
+        // const { title, message } = request.params;
+        let alertBody = request.params.alertBody;
+        if(!alertBody){
+          alertBody = "You have a new notifications!";
+        }
         await snap.request({
           method: "snap_dialog",
           params: {
             type: "alert",
             content: panel([
-              heading("You have a new notifications!"),
+              heading(alertBody),
             ]),
           },
         });
 
+        const message = request.params.messageBody;
         await snap.request({
           method: 'snap_notify',
           params: {
             type: 'inApp',
-            message: 'Hello, world!',
+            message,
           },
         });
         return true;
