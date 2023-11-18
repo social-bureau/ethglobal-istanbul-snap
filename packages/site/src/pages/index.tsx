@@ -7,6 +7,7 @@ import {
   ReconnectButton,
   SendHelloButton,
   Card,
+  SendHelloButton2,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
 import { MetamaskActions, MetaMaskContext } from '../hooks';
@@ -15,6 +16,7 @@ import {
   getSnap,
   isLocalSnap,
   sendHello,
+  sendHelloAlert,
   shouldDisplayReconnectButton,
 } from '../utils';
 
@@ -133,6 +135,15 @@ const Index = () => {
     }
   };
 
+  const handleSendHelloClickAlert = async () => {
+    try {
+      await sendHelloAlert();
+    } catch (error) {
+      console.error(error);
+      dispatch({ type: MetamaskActions.SetError, payload: error });
+    }
+  };
+
   return (
     <Container>
       <Heading>
@@ -195,11 +206,17 @@ const Index = () => {
             title: 'Send Hello message',
             description:
               'Display a custom message within a confirmation screen in MetaMask.',
-            button: (
-              <SendHelloButton
-                onClick={handleSendHelloClick}
-                disabled={!state.installedSnap}
-              />
+              button: (
+                <>
+                  <SendHelloButton
+                    onClick={handleSendHelloClick}
+                    disabled={!state.installedSnap}
+                  />
+                  <SendHelloButton2
+                    onClick={handleSendHelloClickAlert}
+                    disabled={!state.installedSnap}
+                  />
+                </>
             ),
           }}
           disabled={!state.installedSnap}

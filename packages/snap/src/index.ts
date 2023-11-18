@@ -1,5 +1,5 @@
 import type { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { panel, text } from '@metamask/snaps-ui';
+import { divider, heading, panel, text } from '@metamask/snaps-ui';
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -11,23 +11,77 @@ import { panel, text } from '@metamask/snaps-ui';
  * @returns The result of `snap_dialog`.
  * @throws If the request method is not valid for this snap.
  */
-export const onRpcRequest: OnRpcRequestHandler = ({ origin, request }) => {
-  switch (request.method) {
-    case 'hello':
-      return snap.request({
-        method: 'snap_dialog',
-        params: {
-          type: 'confirmation',
-          content: panel([
-            text(`Hello, **${origin}**!`),
-            text('This custom confirmation is just for display purposes.'),
-            text(
-              'But you can edit the snap source code to make it do something, if you want to!',
-            ),
-          ]),
-        },
-      });
-    default:
-      throw new Error('Method not found.');
+export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => {
+  const _request:any = request
+  const _origin:any = origin
+
+  console.log("onRpcRequest called...")
+  console.log("_origin => %o",_origin)
+  console.log("_request => %o",_request)
+  if (
+    _origin === "http://localhost:8000" ||
+    _origin === "http://localhost:4200" ||
+    _origin === "https://chat-ethglobal-n2n.socialbureau.io"
+  ) {
+    switch (request.method) {
+      case 'hello':
+        const res = await snap.request({
+          method: 'snap_dialog',
+          params: {
+            type: 'confirmation',
+            content: panel([
+              text(`Hello, **${_origin}**!`),
+              text('text 1'),
+              text(
+                'text 2',
+              ),
+            ]),
+          },
+        });
+        console.log("request.method['hello'] res... %o",res)
+        if (res) {
+          const walletAddress = await snap.request({
+            method: 'snap_dialog',
+            params: {
+              type: 'prompt',
+              content: panel([
+                heading('What is the wallet address?'),
+                text('Please enter the wallet address to be monitored'),
+              ]),
+              placeholder: '0x123...',
+            },
+          });
+          console.log("request.method['hello'] walletAddress... %o",walletAddress)
+        }
+        return false;
+      case "hello_world": {
+          await snap.request({
+            method: "snap_dialog",
+            params: {
+              type: "alert",
+              content: panel([
+                heading("+!+!+!!+!+ Welcome to xxx Snap!"),
+                divider(),
+                text("xxxyyyy Start getting notifications xxxyyyy"),
+              ]),
+            },
+          });
+          return true;
+        }
+      default:
+        throw new Error('Method not found.');
+    }
+  } else {
+    await snap.request({
+      method: "snap_dialog",
+      params: {
+        type: "alert",
+        content: panel([
+          heading("Error"),
+          text("This dapp is not supported THIS_SNAP!"),
+        ]),
+      },
+    });
+    return true;
   }
 };
