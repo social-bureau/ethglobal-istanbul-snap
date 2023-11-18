@@ -1,13 +1,13 @@
 {
   "version": "0.1.0",
   "description": "Snap for N2N Catcha realtime end to end encryption.",
-  "proposedName": "Sending chat notification",
+  "proposedName": "N2N Catcha Chat",
   "repository": {
     "type": "git",
     "url": "https://github.com/social-bureau/ethglobal-istanbul-snap"
   },
   "source": {
-    "shasum": "wTDK0/9uM08s/XFs/GIRFuEEXC5P8Wk4BEkak7gWj+8=",
+    "shasum": "3VFFsawsBz+iHcJWFak74LmHQncMAdrhsfq2EbmCyyQ=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
