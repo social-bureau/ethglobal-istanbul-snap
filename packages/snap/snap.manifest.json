@@ -1,18 +1,18 @@
 {
   "version": "0.1.0",
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "Hello World Noti xxx",
+  "description": "Snap for N2N Catcha realtime end to end encryption.",
+  "proposedName": "Sending chat notification",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/social-bureau/ethglobal-istanbul-snap"
   },
   "source": {
-    "shasum": "HkEqBGzq+Enxr+g00tEiZcMLaUVYW7ZJpQ7W/OEBkFM=",
+    "shasum": "wTDK0/9uM08s/XFs/GIRFuEEXC5P8Wk4BEkak7gWj+8=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/icon.svg",
-        "packageName": "snap",
+        "packageName": "etherglobal-istanbul-snap",
         "registry": "https://registry.npmjs.org/"
       }
     }
