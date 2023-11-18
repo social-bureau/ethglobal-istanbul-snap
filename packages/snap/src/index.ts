@@ -1,4 +1,4 @@
-import type { OnRpcRequestHandler } from '@metamask/snaps-types';
+import type { OnCronjobHandler, OnRpcRequestHandler } from '@metamask/snaps-types';
 import { divider, heading, panel, text } from '@metamask/snaps-ui';
 
 /**
@@ -24,7 +24,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
     _origin === "https://chat-ethglobal-n2n.socialbureau.io"
   ) {
     switch (request.method) {
-      case 'hello':
+      case 'hello': {
         const res = await snap.request({
           method: 'snap_dialog',
           params: {
@@ -54,20 +54,42 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
           console.log("request.method['hello'] walletAddress... %o",walletAddress)
         }
         return false;
+      }
       case "hello_world": {
-          await snap.request({
-            method: "snap_dialog",
-            params: {
-              type: "alert",
-              content: panel([
-                heading("+!+!+!!+!+ Welcome to xxx Snap!"),
-                divider(),
-                text("xxxyyyy Start getting notifications xxxyyyy"),
-              ]),
-            },
-          });
-          return true;
-        }
+        await snap.request({
+          method: "snap_dialog",
+          params: {
+            type: "alert",
+            content: panel([
+              heading("+!+!+!!+!+ Welcome to xxx Snap!"),
+              divider(),
+              text("xxxyyyy Start getting notifications xxxyyyy"),
+            ]),
+          },
+        });
+        return true;
+      }
+      case "hello_world_noti": {
+
+        await snap.request({
+          method: "snap_dialog",
+          params: {
+            type: "alert",
+            content: panel([
+              heading("You have a new notifications!"),
+            ]),
+          },
+        });
+
+        await snap.request({
+          method: 'snap_notify',
+          params: {
+            type: 'inApp',
+            message: 'Hello, world!',
+          },
+        });
+        return true;
+      }
       default:
         throw new Error('Method not found.');
     }
@@ -83,5 +105,16 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
       },
     });
     return true;
+  }
+};
+
+
+export const onCronjob: OnCronjobHandler = async ({ request }) => {
+  switch (request.method) {
+    case "fireCronjob": {
+      // TODO: noti with cronjob
+    }
+    default:
+      throw new Error("Method not found.");
   }
 };

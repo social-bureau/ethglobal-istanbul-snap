@@ -106,7 +106,7 @@ export const SendHelloButton2 = (props: ComponentProps<typeof Button>) => {
 
   return (
     <>
-      <Button Button {...props} style={mystyle}>Send 'Hello World' Alert</Button>
+      <Button Button {...props} style={mystyle}>Send 'Hello World' Noti</Button>
     </>
   );
 };
