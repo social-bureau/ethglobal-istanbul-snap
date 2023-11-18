@@ -1,6 +1,6 @@
 {
   "name": "etherglobal-istanbul-snap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Snap for N2N Catcha realtime end to end encryption.",
   "repository": {
     "type": "git",
